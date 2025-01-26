@@ -1,6 +1,11 @@
 const URL = require("../Models/url_model")
 const shortid = require("shortid");
 
+const getHomePage=async(req,res)=>{
+    const allurl=await URL.find();
+    return res.render("Home",{urls:allurl});
+}
+
 const handleGenerateNewShortUrl = async (req, res) => {
     const shortID = shortid(8);
     const body = req.body;
@@ -12,7 +17,7 @@ const handleGenerateNewShortUrl = async (req, res) => {
         visitHistory: [],
     });
 
-    return res.json({ id: shortID });
+    return res.render("Home",{id: shortID});
 }
 
 const redirectToLongUrl = async (req, res) => {
@@ -42,4 +47,4 @@ const getVisitHistory = async (req, res) => {
     });
 };
 
-module.exports = { handleGenerateNewShortUrl, redirectToLongUrl,getVisitHistory }
+module.exports = { handleGenerateNewShortUrl, redirectToLongUrl,getVisitHistory ,getHomePage}

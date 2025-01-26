@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+  </head>
+  <body>
+    <h1>URL Shortner</h1>
+
+    <form action="/url" method="post">
+      <label for="url">Enter URL:</label>
+      <input type="text" id="url" name="redirectURL" />
+      <input type="submit" value="Shorten" />
+    </form>
+    <hr />
+    <h2>Your Shortened URLs</h2>
+    <% if(locals.id){%>
+    <a href="http://localhost:8090/url/<%= id %>"
+      >http://localhost:8090/url/<%= id %></a
+    >
+    <%}%>
+
+    <div>
+      <% if (locals.urls) { %>
+      <table id="table" cellspacing="10px" cellpadding="10px" border="10px">
+        <thead>
+          <tr>
+            <th>S.No.</th>
+            <th>Original URL</th>
+            <th>Shortened URL</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach((url, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><a href="<%= url.redirectURL %>"><%= url.redirectURL %></a></td>
+            <td>
+              <a href="http://localhost:8090/url/<%= url.shortId %>"
+                >http://localhost:8090/url/<%= url.shortId %></a
+              >
+            </td>
+            <td><%= url.visitHistory.length %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% } %>
+    </div>
+  </body>
+</html>
