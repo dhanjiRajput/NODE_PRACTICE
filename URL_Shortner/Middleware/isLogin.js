@@ -7,7 +7,7 @@ const isLogin=async(req,res,next)=>{
         return res.redirect("/user/login");
     }else{
         const user=await User.findById(userId);
-        req.user=user.id;
+        req.user=user
         next();
     }
 }

@@ -17,6 +17,7 @@ const userSignup=async(req,res)=>{
     }else{
         const user=await User.create(req.body);
         res.cookie("userId",user.id);
+        res.cookie("userName",user.username);
         return res.render("Home");
     }
 };
@@ -32,6 +33,7 @@ const userLogin=async(req,res)=>{
         return res.status(401).send({message:"Invalid Password"});
     }else{
         res.cookie("userId",isexist.id);
+        res.cookie("userName",isexist.username);
         return res.render("Home");
     } 
 };

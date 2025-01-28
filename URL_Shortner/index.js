@@ -4,6 +4,7 @@ const urlRouter = require('./Routes/url_route');
 const path=require('path');
 const cookie = require('cookie-parser');
 const userRouter = require('./Routes/user_route');
+const { isLogin } = require('./Middleware/isLogin');
 require("dotenv").config();
 const app = express();
 app.use(express.json());
@@ -15,7 +16,7 @@ app.set('Views',path.join(__dirname, 'Views'));
 app.use(express.static(path.join(__dirname,'Public')));
 
 
-app.use("/url",urlRouter);
+app.use("/url",isLogin,urlRouter);
 app.use("/user",userRouter);
 
 const PORT=process.env.PORT ||8090;

@@ -30,6 +30,7 @@
             <th>Original URL</th>
             <th>Shortened URL</th>
             <th>Clicks</th>
+            <th>Ceated By</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@
               >
             </td>
             <td><%= url.visitHistory.length %></td>
+            <td><%= username %></td>
           </tr>
           <% }); %>
         </tbody>

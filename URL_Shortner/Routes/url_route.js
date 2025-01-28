@@ -1,10 +1,9 @@
 const {Router}=require('express');
-const { handleGenerateNewShortUrl, redirectToLongUrl, getVisitHistory, getHomePage } = require('../Controllers/url_controller');
-const { isLogin } = require('../Middleware/isLogin');
+const { handleGenerateNewShortUrl, redirectToLongUrl, getVisitHistory, getHomePage} = require('../Controllers/url_controller');
 
 const urlRouter=Router();
 
-urlRouter.get("/",isLogin, getHomePage);
+urlRouter.get("/", getHomePage);
 urlRouter.post("/",handleGenerateNewShortUrl);
 urlRouter.get("/:shortId",redirectToLongUrl);
 urlRouter.get("/analytics/:shortId",getVisitHistory);
