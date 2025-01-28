@@ -13,9 +13,10 @@ const userSignup=async(req,res)=>{
     const existingUser=await User.findOne({email:email});
 
     if(existingUser){
-        alert("User already exists");
+        return res.status(404).send({message:"User Exist Already"});
     }else{
         const user=await User.create(req.body);
+        res.cookie("userId",user.id);
         return res.render("Home");
     }
 };
@@ -25,13 +26,14 @@ const userLogin=async(req,res)=>{
     const isexist=await User.findOne({email:email});
 
     if(!isexist){
-        return res.status(404).send({message:"User Not Founfied"});
+        return res.status(404).send({message:"User Not Found"});
     }
     else if(isexist.password!==password){
         return res.status(401).send({message:"Invalid Password"});
     }else{
-        res.render("Home");
-    }
+        res.cookie("userId",isexist.id);
+        return res.render("Home");
+    } 
 };
 
 module.exports={getSignupPage, userSignup, getLoginPage,userLogin};
