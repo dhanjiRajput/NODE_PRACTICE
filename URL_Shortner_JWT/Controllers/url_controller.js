@@ -3,7 +3,7 @@ const URL = require("../Models/url_model")
 const shortid = require("shortid");
 
 const getHomePage=async(req,res)=>{
-    const username=req.cookies.userName;
+    const username=req.user.username;
     const allurl=await URL.find({createdBy:req.user.id}); 
     return res.render("Home",{urls:allurl,username:username});
 }

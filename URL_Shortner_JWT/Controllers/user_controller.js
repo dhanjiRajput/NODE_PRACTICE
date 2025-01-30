@@ -1,4 +1,6 @@
 const User = require("../Models/user_model");
+const jwt = require("jsonwebtoken");    
+require("dotenv").config();
 
 const getSignupPage=async(req,res)=>{
     res.render('signup');
@@ -16,8 +18,12 @@ const userSignup=async(req,res)=>{
         return res.status(404).send({message:"User Exist Already"});
     }else{
         const user=await User.create(req.body);
-        res.cookie("userId",user.id);
-        res.cookie("userName",user.username);
+        const token=await jwt.sign({
+            id: user._id,
+            username: user.username,
+            email: user.email,
+        },process.env.secret_key);
+        res.cookie("token",token);
         return res.render("Home");
     }
 };
@@ -31,11 +37,14 @@ const userLogin=async(req,res)=>{
     }
     else if(isexist.password!==password){
         return res.status(401).send({message:"Invalid Password"});
-    }else{
-        res.cookie("userId",isexist.id);
-        res.cookie("userName",isexist.username);
-        return res.render("Home");
-    } 
+    }
+    const token=await jwt.sign({
+        id: isexist._id,
+        username: isexist.username,
+        email: isexist.email
+    },process.env.secret_key);
+    res.cookie("token",token);
+    return res.render("Home");
 };
 
 module.exports={getSignupPage, userSignup, getLoginPage,userLogin};
