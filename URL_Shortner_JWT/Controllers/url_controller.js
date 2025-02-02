@@ -19,7 +19,6 @@ const handleGenerateNewShortUrl = async (req, res) => {
         visitHistory: [],
         createdBy:req.user.id,
     });
-
     return res.render("Home",{id: shortID});
 }
 
