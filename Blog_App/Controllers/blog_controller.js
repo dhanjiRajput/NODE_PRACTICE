@@ -13,7 +13,6 @@ exports.createBlog = async (req, res) => {
         createdBy: req.user.id,
         coverImage: `/uploads/${req.file.filename}`,
     })
-    
     res.redirect(`/api/v1`);
 };
 
